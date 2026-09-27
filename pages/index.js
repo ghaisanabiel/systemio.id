@@ -1,30 +1,40 @@
-import { useEffect, useRef, useState, Fragment } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 
 const WA_NUMBER = '6281234567890'; // ganti dengan nomor WhatsApp aslimu
 
 const T = {
   id: {
-    nav: { home: 'Home', make: 'What We Make', portfolio: 'Portofolio', about: 'About', order: 'Pesan Website' },
+    nav: { home: 'Home', make: 'What We Make', portfolio: 'Portofolio', about: 'About', cta: 'Konsultasi Gratis' },
     hero: {
       title1: 'Website yang ',
       titleEm: 'bekerja sendiri',
       title2: ', sementara kamu jalanin bisnisnya.',
       sub: 'Systemio.id bikinin website, asisten AI, dan automation buat bisnis kamu. Dirancang bareng, dibangun secara terbuka.',
-      cta: 'Pesan Website Sekarang',
+      cta: 'Konsultasi Gratis via WhatsApp',
+      note: 'Dari obrolan pertama sampai website online, biasanya dua sampai tiga minggu.',
     },
+    values: [
+      { title: 'Dibangun secara terbuka', desc: 'Prosesnya didokumentasikan, bukan kerja tertutup di layar orang lain.' },
+      { title: 'Respons langsung dari tim', desc: 'Tanya lewat WhatsApp, dibalas oleh kami sendiri, bukan robot.' },
+      { title: 'Harga jelas dari awal', desc: 'Satu paket, satu harga. Tidak ada biaya tersembunyi di tengah jalan.' },
+    ],
     make: {
       heading: 'Apa yang kami buat',
-      intro: 'Tiga sistem yang kami bangun buat bisnis kamu, dan salah satunya bisa langsung kamu coba di halaman ini.',
+      intro: 'Tiga sistem yang kami bangun buat bisnis kamu, dari nol sampai jalan sendiri.',
       offers: [
         { mark: 'Web', title: 'Website', desc: 'Cepat, rapi, dan enak dilihat dari HP. Dibangun sesuai gaya bisnismu, bukan template asal jadi.' },
         { mark: 'AI', title: 'Asisten AI', desc: 'Jawab pertanyaan pelanggan 24 jam, tanpa kamu harus standby di chat terus terusan.' },
         { mark: 'Sys', title: 'Automation', desc: 'Kerjaan berulang seperti follow up, laporan, dan pengingat jalan otomatis di belakang layar.' },
       ],
-      videoTag: 'Video di balik layar segera hadir',
-      videoTitle: 'Lihat cara kami bikin asisten AI ini',
-      videoDesc: 'Fiturnya bisa kalian pakai langsung loh! Coba sendiri di halaman Pesan Website, ngobrol sama AI-nya kayak lagi chat beneran.',
-      videoBtn: 'Coba Sekarang',
+    },
+    process: {
+      heading: 'Cara kerja kami',
+      steps: [
+        { n: '01', title: 'Chat di WhatsApp', desc: 'Ceritain bisnis dan kebutuhan kamu langsung ke tim kami, bukan ke formulir.' },
+        { n: '02', title: 'Kami rancang dan bangun', desc: 'Desain dan sistemnya dibangun sesuai gaya bisnismu, sambil kami kabari progresnya.' },
+        { n: '03', title: 'Website kamu jalan', desc: 'Online, siap dipakai, dan bisa terus dikembangkan seiring bisnismu tumbuh.' },
+      ],
     },
     portfolio: {
       heading: 'Portofolio',
@@ -39,42 +49,45 @@ const T = {
       heading: 'Dibangun dari masalah beneran, bukan teori.',
       body: 'Systemio.id dijalanin dari Jakarta. Semuanya dimulai dari kebiasaan belajar sambil bangun: nyari masalah nyata, terus dibikin sistemnya, sambil dokumentasiin prosesnya secara terbuka. Sekarang sistem yang sama itu yang kami tawarin ke bisnis lain: website, asisten AI, dan automation yang beneran dipakai, bukan cuma dipajang.',
     },
-    footer: '© 2026 Systemio.id, Jakarta Indonesia',
-    order: {
-      title: 'Ceritain website yang kamu mau.',
-      sub: 'Ngobrol aja kayak biasa. Nanti dirangkum otomatis dan dikirim ke tim kami.',
-      back: '← Kembali ke Beranda',
-      placeholder: 'Tulis pesanmu di sini...',
-      send: 'Kirim',
-      typing: 'Mengetik...',
-      recapTitle: 'Rekap yang udah disepakati',
-      waBtn: 'Kirim ke WhatsApp',
-      firstMessage: 'Halo! Aku bakal bantu susun kebutuhan website kamu. Mau dipakai buat bisnis apa nih?',
-      fields: { bisnis: 'Jenis usaha', tujuan: 'Tujuan dan target', halaman: 'Halaman', materi: 'Materi tersedia', gaya: 'Gaya dan referensi', fitur: 'Fitur', identitas: 'Identitas brand', budget: 'Budget', timeline: 'Timeline', kontak: 'Kontak' },
+    finalCta: {
+      heading: 'Siap punya website yang bekerja buat kamu?',
+      sub: 'Ceritain kebutuhanmu, kami bantu susun dari sana.',
+      cta: 'Konsultasi Gratis via WhatsApp',
     },
-    confirm: { title: 'Terkirim!', body: 'Tunggu ya, tim kami akan segera menghubungi kamu.' },
+    footer: '© 2026 Systemio.id, Jakarta Indonesia',
+    waText: 'Hi Systemio.id, saya mau tanya soal jasa pembuatan website.',
   },
   en: {
-    nav: { home: 'Home', make: 'What We Make', portfolio: 'Portfolio', about: 'About', order: 'Order a Website' },
+    nav: { home: 'Home', make: 'What We Make', portfolio: 'Portfolio', about: 'About', cta: 'Free Consultation' },
     hero: {
       title1: 'A website that ',
       titleEm: 'works on its own',
       title2: ', while you run the business.',
       sub: 'Systemio.id builds websites, AI assistants, and automation for your business. Designed together, built in the open.',
-      cta: 'Order Your Website',
+      cta: 'Chat With Us on WhatsApp',
+      note: 'From the first chat to a live website, usually two to three weeks.',
     },
+    values: [
+      { title: 'Built in the open', desc: 'The whole process is documented, not closed off behind someone else\u2019s screen.' },
+      { title: 'Direct replies from the team', desc: 'Ask us on WhatsApp and hear back from a real person, not a bot.' },
+      { title: 'Clear pricing upfront', desc: 'One package, one price. No hidden costs added along the way.' },
+    ],
     make: {
       heading: 'What we make',
-      intro: 'Three systems we build for your business, and one of them you can try right on this page.',
+      intro: 'Three systems we build for your business, from scratch to fully running.',
       offers: [
         { mark: 'Web', title: 'Website', desc: 'Fast, clean, and mobile friendly. Built around your business, not a generic template.' },
         { mark: 'AI', title: 'AI Assistant', desc: 'Answers customer questions around the clock, so you do not have to be online all the time.' },
         { mark: 'Sys', title: 'Automation', desc: 'Repetitive tasks like follow ups, reports, and reminders run automatically in the background.' },
       ],
-      videoTag: 'Behind the scenes video coming soon',
-      videoTitle: 'See how we built this AI assistant',
-      videoDesc: 'You can actually use this feature right now! Try it yourself on the Order a Website page, chat with the AI like a real conversation.',
-      videoBtn: 'Try It Now',
+    },
+    process: {
+      heading: 'How we work',
+      steps: [
+        { n: '01', title: 'Chat on WhatsApp', desc: 'Tell our team about your business and what you need, no form to fill out.' },
+        { n: '02', title: 'We design and build', desc: 'The design and system are built around your business, with updates along the way.' },
+        { n: '03', title: 'Your website goes live', desc: 'Online, ready to use, and built to grow alongside your business.' },
+      ],
     },
     portfolio: {
       heading: 'Portfolio',
@@ -89,20 +102,13 @@ const T = {
       heading: 'Built from real problems, not theory.',
       body: 'Systemio.id is run from Jakarta. It all started from a habit of learning by building: finding real problems, building the system for them, and documenting the process in the open. Now that same system is what we offer to other businesses: websites, AI assistants, and automation that actually get used, not just displayed.',
     },
-    footer: '© 2026 Systemio.id, Jakarta Indonesia',
-    order: {
-      title: 'Tell us about the website you want.',
-      sub: 'Just chat naturally. It will be summarized automatically and sent to our team.',
-      back: '← Back to Home',
-      placeholder: 'Type your message...',
-      send: 'Send',
-      typing: 'Typing...',
-      recapTitle: 'Confirmed recap',
-      waBtn: 'Send to WhatsApp',
-      firstMessage: 'Hi! I will help put together what you need for your website. What kind of business is this for?',
-      fields: { bisnis: 'Business type', tujuan: 'Goal and audience', halaman: 'Pages', materi: 'Available assets', gaya: 'Style and references', fitur: 'Features', identitas: 'Brand identity', budget: 'Budget', timeline: 'Timeline', kontak: 'Contact' },
+    finalCta: {
+      heading: 'Ready for a website that works for you?',
+      sub: 'Tell us what you need and we will help you shape it from there.',
+      cta: 'Chat With Us on WhatsApp',
     },
-    confirm: { title: 'Sent!', body: 'Please wait, our team will reach out to you shortly.' },
+    footer: '© 2026 Systemio.id, Jakarta Indonesia',
+    waText: 'Hi Systemio.id, I would like to ask about your website service.',
   },
 };
 
@@ -111,12 +117,6 @@ export default function HomePage() {
   const t = T[lang];
 
   const [introDone, setIntroDone] = useState(false);
-  const [orderOpen, setOrderOpen] = useState(false);
-  const [messages, setMessages] = useState([{ role: 'assistant', content: T.id.order.firstMessage }]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [summary, setSummary] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false);
   const revealRefs = useRef([]);
 
   useEffect(() => {
@@ -137,64 +137,11 @@ export default function HomePage() {
     return () => io.disconnect();
   }, [introDone, lang]);
 
-  useEffect(() => {
-    setMessages((prev) => (prev.length === 1 && prev[0].role === 'assistant' ? [{ role: 'assistant', content: t.order.firstMessage }] : prev));
-  }, [lang]);
-
   const addReveal = (el) => {
     if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el);
   };
 
-  function openOrder() {
-    setOrderOpen(true);
-  }
-
-  async function sendMessage() {
-    const text = input.trim();
-    if (!text || loading) return;
-    const next = [...messages, { role: 'user', content: text }];
-    setMessages(next);
-    setInput('');
-    setLoading(true);
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next, lang }),
-      });
-      const data = await res.json();
-      const raw = data.reply || (lang === 'en' ? 'Sorry, something went wrong. Try again.' : 'Maaf, ada gangguan. Coba lagi ya.');
-
-      const match = raw.match(/<<SUMMARY>>([\s\S]*?)<<END>>/);
-      const visibleText = raw.replace(/<<SUMMARY>>[\s\S]*?<<END>>/, '').trim();
-      setMessages([...next, { role: 'assistant', content: visibleText }]);
-
-      if (match) {
-        try {
-          const parsed = JSON.parse(match[1]);
-          setSummary(parsed);
-          setShowConfirm(true);
-          setTimeout(() => setShowConfirm(false), 2800);
-          fetch('/api/notify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(parsed),
-          }).catch(() => {});
-        } catch {
-          // format JSON meleset, tombol WA cuma nggak muncul
-        }
-      }
-    } catch {
-      setMessages([...next, { role: 'assistant', content: lang === 'en' ? 'Sorry, the connection is having trouble.' : 'Maaf, koneksi ke server lagi bermasalah.' }]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const waText = summary
-    ? Object.entries(t.order.fields).map(([k, label]) => `${label}: ${summary[k] || '-'}`).join('\n')
-    : '';
-  const waHref = summary ? `https://wa.me/${6281213000434}?text=${encodeURIComponent((lang === 'en' ? 'Hi, I would like to order a website.\n\n' : 'Halo, saya mau pesan website.\n\n') + waText)}` : '#';
+  const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t.waText)}`;
 
   return (
     <>
@@ -210,17 +157,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div id="confirm-overlay" className={showConfirm ? 'show' : ''}>
-        <div className="check-circle">
-          <svg viewBox="0 0 110 110">
-            <circle cx="55" cy="55" r="48" />
-            <path d="M32 56 L48 72 L80 38" />
-          </svg>
-        </div>
-        <h2>{t.confirm.title}</h2>
-        <p>{t.confirm.body}</p>
-      </div>
-
       <nav>
         <a href="#home" className="logo">systemio.id</a>
         <div className="navlinks">
@@ -232,7 +168,7 @@ export default function HomePage() {
             <button className={lang === 'id' ? 'active' : ''} onClick={() => setLang('id')}>ID</button>
             <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
           </div>
-          <button className="btn" onClick={openOrder}>{t.nav.order}</button>
+          <a className="btn" href={waHref} target="_blank" rel="noopener noreferrer">{t.nav.cta}</a>
         </div>
       </nav>
 
@@ -244,8 +180,20 @@ export default function HomePage() {
             </div>
             <div className="hero-side reveal" ref={addReveal}>
               <p>{t.hero.sub}</p>
-              <button className="btn btn-glow" onClick={openOrder}>{t.hero.cta}</button>
+              <a className="btn btn-glow" href={waHref} target="_blank" rel="noopener noreferrer">{t.hero.cta}</a>
+              <p className="hero-note">{t.hero.note}</p>
             </div>
+          </div>
+        </section>
+
+        <section id="values">
+          <div className="value-grid">
+            {t.values.map((v, i) => (
+              <div className="value-item reveal" ref={addReveal} key={i}>
+                <h3>{v.title}</h3>
+                <p>{v.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -262,17 +210,20 @@ export default function HomePage() {
               <span className="offer-arrow">→</span>
             </div>
           ))}
+        </section>
 
-          <div className="video-callout reveal" ref={addReveal}>
-            <div className="video-box">
-              <span className="play">▶</span>
-              <span>{t.make.videoTag}</span>
-            </div>
-            <div className="video-callout-text">
-              <h3>{t.make.videoTitle}</h3>
-              <p>{t.make.videoDesc}</p>
-              <button className="btn" onClick={openOrder}>{t.make.videoBtn}</button>
-            </div>
+        <section id="process">
+          <div className="section-head reveal" ref={addReveal}>
+            <h2>{t.process.heading}</h2>
+          </div>
+          <div className="process-grid">
+            {t.process.steps.map((s, i) => (
+              <div className="process-item reveal" ref={addReveal} key={i}>
+                <span className="process-n">{s.n}</span>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -281,9 +232,12 @@ export default function HomePage() {
             <h2>{t.portfolio.heading}</h2>
             <p style={{ marginTop: 10 }}>{t.portfolio.intro}</p>
           </div>
-          <div className="folio-list">
+          <div className="folio-grid">
             {t.portfolio.items.map((p, i) => (
-              <div className="folio-item reveal" ref={addReveal} key={i}><h3>{p.name}</h3><span>{p.desc}</span></div>
+              <div className="folio-card reveal" ref={addReveal} key={i}>
+                <h3>{p.name}</h3>
+                <span>{p.desc}</span>
+              </div>
             ))}
           </div>
         </section>
@@ -293,54 +247,16 @@ export default function HomePage() {
           <p className="reveal" ref={addReveal}>{t.about.body}</p>
         </section>
 
+        <section id="final-cta">
+          <h2 className="reveal" ref={addReveal}>{t.finalCta.heading}</h2>
+          <p className="reveal" ref={addReveal}>{t.finalCta.sub}</p>
+          <a className="btn btn-glow reveal" ref={addReveal} href={waHref} target="_blank" rel="noopener noreferrer">{t.finalCta.cta}</a>
+        </section>
+
         <footer>
           <span className="logo" style={{ fontSize: '1.1rem' }}>systemio.id</span>
           <span>{t.footer}</span>
         </footer>
-      </div>
-
-      <div id="order" style={{ transform: orderOpen ? 'translateY(0)' : 'translateY(100%)' }}>
-        <div className="order-nav">
-          <a className="back-link" onClick={() => setOrderOpen(false)}>{t.order.back}</a>
-          <span className="logo" style={{ fontSize: '1.2rem' }}>systemio.id</span>
-        </div>
-        <div className="order-wrap">
-          <h1>{t.order.title}</h1>
-          <p>{t.order.sub}</p>
-
-          <div className="chat">
-            {messages.map((m, i) => (
-              <div key={i} className={`bubble ${m.role === 'user' ? 'user' : 'ai'}`}>{m.content}</div>
-            ))}
-            {loading && <div className="bubble ai">{t.order.typing}</div>}
-          </div>
-
-          <div className="order-input">
-            <input
-              type="text"
-              placeholder={t.order.placeholder}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-            />
-            <button className="btn" style={{ padding: '10px 20px' }} onClick={sendMessage} disabled={loading}>{t.order.send}</button>
-          </div>
-
-          {summary && (
-            <div className="summary">
-              <h3>{t.order.recapTitle}</h3>
-              <dl>
-                {Object.entries(t.order.fields).map(([k, label]) => (
-                  <Fragment key={k}>
-                    <dt>{label}</dt>
-                    <dd>{summary[k]}</dd>
-                  </Fragment>
-                ))}
-              </dl>
-              <a className="btn wa-btn" href={waHref} target="_blank" rel="noopener noreferrer">{t.order.waBtn}</a>
-            </div>
-          )}
-        </div>
       </div>
     </>
   );
